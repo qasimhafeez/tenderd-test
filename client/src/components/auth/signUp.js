@@ -47,7 +47,7 @@ const useStyles = makeStyles({
     color: "red",
     marginTop: "-.1rem",
   },
-  buttonStyle: {
+  butonStyle: {
     marginTop: "1.2rem",
   },
   headingH1: {
@@ -66,7 +66,7 @@ const useStyles = makeStyles({
 const SignUp = () => {
   const { register, errors, handleSubmit } = useForm();
 
-  // Initialize classes
+  // Classes
   const classes = useStyles();
 
   // Local state
@@ -115,7 +115,9 @@ const SignUp = () => {
                 pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
               })}
             />
-
+            {/* {errors.email?.type === 'required' && (
+							<p className={classes.errorPTag}>Required*</p>
+						)} */}
             {errors.email?.type === "pattern" && (
               <p className={classes.errorPTag}>
                 please enter correct email address
@@ -128,31 +130,32 @@ const SignUp = () => {
               name="password"
               variant="outlined"
               type="password"
-              inputRef={register({ required: true, minLength: 5 })}
+              inputRef={register({ required: true, minLength: 6 })}
             />
+            {/* {errors.password?.type === 'required' && (
+							<p className={classes.errorPTag}>Required*</p>
+						)} */}
             {errors.password?.type === "minLength" && (
-              <p className={classes.errorPTag}>minimum length 5*</p>
+              <p className={classes.errorPTag}>minimum length 6*</p>
             )}
-
             <TextField
               className={classes.textFieldMargin}
               name="confirm_password"
               label="Confirm Password"
               variant="outlined"
               type="password"
-              inputRef={register({ required: true, minLength: 5 })}
+              inputRef={register({ required: true, minLength: 6 })}
             />
             {errors.confirm_password?.type === "minLength" && (
-              <p className={classes.errorPTag}>minimum length 5*</p>
+              <p className={classes.errorPTag}>minimum length 6*</p>
             )}
-
             <Button
               disabled={loading}
               type="submit"
               color="primary"
               variant="contained"
               size="large"
-              className={classes.buttonStyle}
+              className={classes.butonStyle}
             >
               {loading ? "Signing Up..." : "Sign Up"}
             </Button>
