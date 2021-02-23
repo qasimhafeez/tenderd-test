@@ -11,7 +11,7 @@ import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 
 //auth context
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "../../contexts/AuthContext";
 
 //alert
 import Alert from "@material-ui/lab/Alert";
@@ -28,7 +28,6 @@ const useStyles = makeStyles({
   paper: {
     width: "100%",
     padding: "2rem",
-    // backgroundColor:'#fdfdfd'
   },
   paperFormDiv: {
     display: "flex",
@@ -130,7 +129,6 @@ const SignIn = () => {
               type="password"
               inputRef={register({ required: true, minLength: 5 })}
             />
-            {/* {errors.password?.type === 'required' && <p className={classes.errorPTag}>Required*</p>} */}
             {/* {errors.password?.type === "minLength" && (
               <p className={classes.errorPTag}>minimum length 5*</p>
             )} */}
