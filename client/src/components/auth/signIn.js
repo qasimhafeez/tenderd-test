@@ -124,7 +124,7 @@ const SignIn = () => {
               name="password"
               variant="outlined"
               type="password"
-              inputRef={register({ required: true, minLength: 5 })}
+              inputRef={register({ required: true, minLength: 6 })}
             />
 
             <Button
