@@ -1,3 +1,12 @@
+// Auth Context
+import { useAuth } from "../../contexts/AuthContext";
+// React Hooks
+import { useState } from "react";
+import { useForm } from "react-hook-form";
+// React Router
+import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+// Material Design UI
 import {
   TextField,
   Grid,
@@ -6,18 +15,9 @@ import {
   makeStyles,
   Paper,
 } from "@material-ui/core";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
-
-//auth context
-import { useAuth } from "../../contexts/AuthContext";
-
-//alert
 import Alert from "@material-ui/lab/Alert";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
-//make styles
+// Custom Styles
 const useStyles = makeStyles({
   root: {
     display: "flex",
@@ -65,17 +65,14 @@ const useStyles = makeStyles({
 const SignIn = () => {
   const { register, errors, handleSubmit } = useForm();
 
-  //classes
+  // Initialize classes to use in HTML
   const classes = useStyles();
 
-  //local state
+  // Local state
   const [err, setErr] = useState("");
   const [loading, setLoading] = useState(false);
 
-  //useAuth
   const { signIn } = useAuth();
-
-  //usehistory
   const { push } = useHistory();
 
   const handleFormSubmit = (data) => {
@@ -114,12 +111,12 @@ const SignIn = () => {
                 pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/,
               })}
             />
-            {/* {errors.email?.type === 'required' && <p className={classes.errorPTag}>Required*</p>} */}
             {errors.email?.type === "pattern" && (
               <p className={classes.errorPTag}>
                 please enter correct email address
               </p>
             )}
+
             <TextField
               fullWidth
               label="Password"
@@ -129,9 +126,7 @@ const SignIn = () => {
               type="password"
               inputRef={register({ required: true, minLength: 5 })}
             />
-            {/* {errors.password?.type === "minLength" && (
-              <p className={classes.errorPTag}>minimum length 5*</p>
-            )} */}
+
             <Button
               disabled={loading}
               type="submit"
@@ -143,16 +138,16 @@ const SignIn = () => {
               {loading ? "Signing In..." : "Sign In"}
             </Button>
           </form>
-          <section className={classes.forgotPasswordSection}>
+          {/* <section className={classes.forgotPasswordSection}>
             <p>
               <Link className={classes.linkStyle} to="/forgotpassword">
                 Forgot Password?
               </Link>
             </p>
-          </section>
+          </section> */}
           <section className={classes.lastSection}>
             <p>
-              need an account?{" "}
+              Need an account?{" "}
               <Link className={classes.linkStyle} to="/signup">
                 Sign Up
               </Link>
