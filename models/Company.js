@@ -8,7 +8,7 @@ const CompanySchema = new Schema({
   },
   userId: {
     ref: "users",
-    type: Schema.Types.ObjectId,
+    type: [Schema.Types.ObjectId],
   },
 });
 
