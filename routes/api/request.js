@@ -37,4 +37,14 @@ router.post("/create", async (req, res) => {
   res.send(newRequest);
 });
 
+// @route   Get api/request/:company_id
+// @desc    Show all requests by company
+// @access  Public
+//TODO
+
+// @route   Update api/request/:company_id
+// @desc    Update request
+// @access  Public
+//TODO
+
 module.exports = router;
