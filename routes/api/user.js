@@ -30,4 +30,25 @@ router.post("/all", async (req, res) => {
   res.status(201).send(users_list);
 });
 
+// @route   GET api/user/:email
+// @desc    Get user from email
+// @access  Public
+router.get("/:email", async (req, res) => {
+  const { email } = req.body;
+  const user = await User.find({ email });
+  if (!user) {
+    res.status(404).send({ err: "User not Found!" });
+  }
+  res.send(user);
+});
+
+// @route   POST api/user/update
+// @desc    Update user with company name ID
+// @access  Public
+router.put("/update/:id", async (req, res) => {
+  const _id = req.params.id;
+  const { companyId } = req.body;
+  const user = await User.findByIdAndUpdate({ _id }, { companyId });
+});
+
 module.exports = router;
