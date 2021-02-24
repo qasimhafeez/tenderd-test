@@ -21,7 +21,7 @@ router.post("/create", async (req, res) => {
 // @route   GET api/user/all
 // @desc    Show complete list of users (Testing Purpose)
 // @access  Public
-router.post("/all", async (req, res) => {
+router.get("/all", async (req, res) => {
   const users_list = await User.find();
   if (!users_list) {
     res.status(404).send({ error: "No User Found!" });
@@ -34,7 +34,7 @@ router.post("/all", async (req, res) => {
 // @desc    Get user from email
 // @access  Public
 router.get("/:email", async (req, res) => {
-  const { email } = req.body;
+  const { email } = req.params;
   const user = await User.find({ email });
   if (!user) {
     res.status(404).send({ err: "User not Found!" });
@@ -49,6 +49,12 @@ router.put("/update/:id", async (req, res) => {
   const _id = req.params.id;
   const { companyId } = req.body;
   const user = await User.findByIdAndUpdate({ _id }, { companyId });
+
+  if (!user) {
+    res.status(404).send({ err: "User not found!" });
+  }
+
+  res.send(user);
 });
 
 module.exports = router;
