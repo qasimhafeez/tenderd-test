@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const bodyParser = require("body-parser");
+const cors = require("cors");
 
 // Loading Routes/api
 const user = require("./routes/api/user");
@@ -10,6 +11,7 @@ const request = require("./routes/api/request");
 const app = express();
 
 // Body parser middleware
+app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
