@@ -22,7 +22,7 @@ router.post("/create", async (req, res) => {
 // @desc    Show complete list of users (Testing Purpose)
 // @access  Public
 router.get("/all", async (req, res) => {
-  const users_list = await User.find();
+  const users_list = await User.find().populate("companyId");
   if (!users_list) {
     res.status(404).send({ error: "No User Found!" });
   }
@@ -35,7 +35,7 @@ router.get("/all", async (req, res) => {
 // @access  Public
 router.get("/:email", async (req, res) => {
   const { email } = req.params;
-  const user = await User.find({ email });
+  const user = await User.find({ email }).populate("companyId");
   if (!user) {
     res.status(404).send({ err: "User not Found!" });
   }
@@ -48,6 +48,7 @@ router.get("/:email", async (req, res) => {
 router.put("/update/:id", async (req, res) => {
   const _id = req.params.id;
   const { companyId } = req.body;
+
   const user = await User.findByIdAndUpdate({ _id }, { companyId });
 
   if (!user) {
@@ -55,6 +56,20 @@ router.put("/update/:id", async (req, res) => {
   }
 
   res.send(user);
+});
+
+// @route   GET api/user/company/:id
+// @desc    Get all the users under same company
+// @access  Public
+router.get("/company/:id", async (req, res) => {
+  const companyId = req.params.id;
+  const user = await User.find({ companyId }).populate("companyId");
+
+  if (!user) {
+    res.status(404).send({ err: "No User found" });
+  }
+
+  res.status(201).send(user);
 });
 
 module.exports = router;
