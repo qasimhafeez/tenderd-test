@@ -45,7 +45,7 @@ router.get("/:email", async (req, res) => {
 
 // @route   POST api/user/update
 // @desc    Update user
-// @access  Public
+// @access  Publi
 router.put("/update/:id", async (req, res) => {
   const _id = req.params.id;
   const { name, companyId } = req.body;
