@@ -33,7 +33,7 @@ router.post("/create", async (req, res) => {
 router.get("/:companyId", async (req, res) => {
   const { companyId } = req.params;
   const requests = await Request.find({ companyId }).populate("companyId");
-  if (!requests || requests === "[]") {
+  if (!requests) {
     res.status(404).send({ err: "No company Found" });
   }
 
@@ -52,6 +52,7 @@ router.put("/:requestId", async (req, res) => {
     image,
     status,
     companyId,
+    userId,
   };
 
   const updateRequest = await findByIdAndUpdate({ _id }, { newRequest });
