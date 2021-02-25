@@ -27,6 +27,21 @@ router.post("/create", async (req, res) => {
   res.send(newRequest);
 });
 
+// @route   Get api/request/get/:requestId
+// @desc    Get a request by Id
+// @access  Public
+router.get("/get/:requestId", async (req, res) => {
+  const _id = req.params.requestId;
+  const requests = await Request.findById({ _id })
+    .populate("companyId")
+    .populate("userId");
+  if (!requests) {
+    res.status(404).send({ err: "No company Found" });
+  }
+
+  res.status(201).send(requests);
+});
+
 // @route   Get api/request/:companyId
 // @desc    Show all requests by company
 // @access  Public
@@ -57,22 +72,18 @@ router.get("/user/:userId", async (req, res) => {
   res.status(201).send(requests);
 });
 
-// @route   Update api/request/:userId
+// @route   Update api/request/update/:requestId
 // @desc    Update request
 // @access  Public
 router.put("/update/:requestId", async (req, res) => {
   const _id = req.params.requestId;
 
-  const newRequest = {
-    type,
-    description,
-    image,
-    status,
-    companyId,
-    userId,
-  };
+  const { type, description, image, status, companyId, userId } = req.body;
 
-  const updateRequest = await findByIdAndUpdate({ _id }, { newRequest });
+  const updateRequest = await findByIdAndUpdate(
+    { _id },
+    { type, description, image, status, companyId, userId }
+  );
   if (!updateRequest) {
     res.send({ err: "Unable to Update the Request" });
   }
