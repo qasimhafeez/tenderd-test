@@ -17,6 +17,7 @@ import Profile from './components/auth/userProfile'
 import ProtectedRoute from './components/common/protectedRoute'
 import Table from './components/table/table'
 import RequestForm from './components/requestForm'
+import EditRequestForm from './components/editRequestForm'
 
 function App() {
 	return (
@@ -34,6 +35,11 @@ function App() {
 							exact
 							path='/userrequestform'
 							component={RequestForm}
+						/>
+						<ProtectedRoute
+							exact
+							path='/edituserrequestform/:requestId'
+							component={EditRequestForm}
 						/>
 					</Switch>
 				</Router>
