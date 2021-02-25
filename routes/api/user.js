@@ -8,10 +8,11 @@ const User = require("../../models/User");
 // @desc    Add a new user
 // @access  Public
 router.post("/create", async (req, res) => {
-  const { name, email } = req.body;
+  const { name, email, companyId } = req.body;
   const newUser = new User({
     name,
     email,
+    companyId,
   });
 
   await newUser.save();
@@ -43,13 +44,13 @@ router.get("/:email", async (req, res) => {
 });
 
 // @route   POST api/user/update
-// @desc    Update user with company name ID
+// @desc    Update user
 // @access  Public
 router.put("/update/:id", async (req, res) => {
   const _id = req.params.id;
-  const { companyId } = req.body;
+  const { name, companyId } = req.body;
 
-  const user = await User.findByIdAndUpdate({ _id }, { companyId });
+  const user = await User.findByIdAndUpdate({ _id }, { name, companyId });
 
   if (!user) {
     res.status(404).send({ err: "User not found!" });
