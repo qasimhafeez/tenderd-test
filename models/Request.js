@@ -16,7 +16,7 @@ const RequestSchema = new Schema({
   },
   created_req_time: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   companyId: {
     ref: "company",
