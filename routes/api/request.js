@@ -80,7 +80,7 @@ router.put("/update/:requestId", async (req, res) => {
 
   const { type, description, image, status, companyId, userId } = req.body;
 
-  const updateRequest = await findByIdAndUpdate(
+  const updateRequest = await Request.findByIdAndUpdate(
     { _id },
     { type, description, image, status, companyId, userId }
   );
