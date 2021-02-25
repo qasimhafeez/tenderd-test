@@ -73,10 +73,4 @@ router.get("/company/:id", async (req, res) => {
   res.status(201).send(user);
 });
 
-// @route   DELETE api/user/company/:id
-// @desc    Remove the user from the company
-// @access  Public
-
-
-
 module.exports = router;
