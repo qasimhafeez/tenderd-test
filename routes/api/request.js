@@ -37,10 +37,18 @@ router.post("/create", async (req, res) => {
   res.send(newRequest);
 });
 
-// @route   Get api/request/:company_id
+// @route   Get api/request/:companyId
 // @desc    Show all requests by company
 // @access  Public
-//TODO
+router.get("/:companyId", async (req, res) => {
+  const { companyId } = req.params;
+  const requests = await Request.find({ companyId }).populate("companyId");
+  if (!requests || requests === "[]") {
+    res.status(404).send({ err: "No company Found" });
+  }
+
+  res.status(201).send(requests);
+});
 
 // @route   Update api/request/:company_id
 // @desc    Update request
