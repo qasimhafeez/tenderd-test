@@ -14,6 +14,8 @@ import { useState } from 'react'
 import { useAuth } from '../../contexts/AuthContext'
 import axios from 'axios'
 import CompanyTable from '../table/companyTable'
+import { useHistory } from 'react-router-dom'
+import { LogoutIcon } from '../../icons/index'
 //css
 const sectionStyle = {
 	display: 'flex',
@@ -41,8 +43,18 @@ const loadingStyle = {
 	alignItems: 'center',
 }
 
+const logoutBarStyle = {
+	display: 'flex',
+	alignItems: 'center',
+	justifyContent: 'space-between',
+	backgroundColor: '#c5cbff',
+	borderRadius: '10px',
+	padding: '0 1rem',
+}
+
 export default function Profile() {
 	const { currentUser, logout } = useAuth()
+	const { push } = useHistory()
 
 	//localstate
 	const [loading, setLoading] = useState(false)
@@ -101,6 +113,14 @@ export default function Profile() {
 				<form onSubmit={onFormSubmitHandler}>
 					<section style={sectionStyle}>
 						<Paper style={paperStyle} elevation={7}>
+							<section style={logoutBarStyle}>
+								<h3
+									style={{ cursor: 'pointer' }}
+									onClick={() => push('/userdata')}>
+									Home
+								</h3>
+								<LogoutIcon onClick={() => logout()} />
+							</section>
 							<h2>Profile</h2>
 							<h3>Email: {currentUser && currentUser.email}</h3>
 							<TextField
@@ -151,6 +171,7 @@ export default function Profile() {
 				runOnUpdate={runOnUpdate}
 				companyId={company}
 				userId={userData && userData._id}
+				userName={name}
 			/>
 		</>
 	)
