@@ -24,7 +24,7 @@ const RequestSchema = new Schema({
   },
   userId: {
     ref: "users",
-    type: [Schema.Types.ObjectId],
+    type: Schema.Types.ObjectId,
   },
   history: {
     type: Date,
