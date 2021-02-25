@@ -1,8 +1,9 @@
-import { useEffect } from 'react'
-import { Container, Paper, makeStyles } from '@material-ui/core'
+import { useEffect, useState } from 'react'
+import { Container, Paper, makeStyles, Button } from '@material-ui/core'
 import { useAuth } from '../../contexts/AuthContext'
 import { LogoutIcon, SettingsIcon } from '../../icons/index'
-
+import { useHistory } from 'react-router-dom'
+import axios from 'axios'
 // Custom Styles
 const useStyles = makeStyles({
 	paper: {
@@ -24,7 +25,7 @@ const useStyles = makeStyles({
 		gridTemplateColumns: '1fr 1fr',
 	},
 	tableHeading: {
-		textAlign: 'center',
+		fontSize: '25px',
 	},
 	tableData: {
 		display: 'grid',
@@ -43,27 +44,64 @@ const useStyles = makeStyles({
 		// color: '#ffff',
 		backgroundColor: '#c5cbff',
 	},
+	loadingStyle: {
+		height: '100vh',
+		width: '100%',
+		display: 'flex',
+		justifyContent: 'center',
+		alignItems: 'center',
+	},
+	requestBar: {
+		display: 'flex',
+		justifyContent: 'space-between',
+		alignItems: 'center',
+	},
 })
 
 const Table = () => {
 	const classes = useStyles()
+	const { push } = useHistory()
+	const [user, setUser] = useState(null)
+	const [loading, setLoading] = useState(null)
 
-	const { logout } = useAuth()
+	const { logout, currentUser } = useAuth()
 
-	return (
+	useEffect(() => {
+		setLoading(true)
+		//get specific user data
+		axios
+			.get(`http://localhost:5000/api/user/${currentUser.email}`)
+			.then(res => {
+				setUser(res.data[0])
+				setLoading(false)
+				console.log('comapney name', res.data[0])
+			})
+			.catch(err => console.log({ err }))
+	}, [])
+
+	return loading ? (
+		<section className={classes.loadingStyle}>
+			<p>Loading...</p>
+		</section>
+	) : (
 		<Container maxWidth='md'>
 			<Paper className={classes.paper} elevation={7}>
 				<div className={classes.tableRoot}>
 					<section className={classes.tableBar}>
-						<h2>Name</h2>
-						<h2>Company Name</h2>
+						<h2>{user && user.name}</h2>
+						<h2>{user && user.companyId.name}</h2>
 						<section className={classes.icons}>
-							<SettingsIcon onClick={() => console.log('settings click')} />
+							<SettingsIcon onClick={() => push('/userprofile')} />
 							<LogoutIcon onClick={() => logout()} />
 						</section>
 					</section>
 					<section className={classes.tableData}>
-						<h1 className={classes.tableHeading}>Requests</h1>
+						<section className={classes.requestBar}>
+							<h1 className={classes.tableHeading}>Requests</h1>
+							<Button color='secondary' variant='contained'>
+								New Request
+							</Button>
+						</section>
 						<section
 							className={classes.tableRow + ' ' + classes.tableRowsHeading}>
 							<h3>Name</h3>
