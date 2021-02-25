@@ -73,4 +73,12 @@ router.get("/company/:id", async (req, res) => {
   res.status(201).send(user);
 });
 
+// @route   DELETE api/user/delete
+// @desc    Delete user
+// @access  Public
+router.delete("/delete", async (req, res) => {
+  User.collection.drop();
+  res.json({ msg: "User dropped!" });
+});
+
 module.exports = router;

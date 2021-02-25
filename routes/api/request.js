@@ -90,4 +90,12 @@ router.put("/update/:requestId", async (req, res) => {
   res.status(201).send(updateRequest);
 });
 
+// @route   Delete api/request/delete
+// @desc    Delete all request
+// @access  Public
+router.delete("/delete", async (req, res) => {
+  Request.collection.drop();
+  res.json({ msg: "Collection dropped!" });
+});
+
 module.exports = router;
