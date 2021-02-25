@@ -32,7 +32,24 @@ router.post("/create", async (req, res) => {
 // @access  Public
 router.get("/:companyId", async (req, res) => {
   const { companyId } = req.params;
-  const requests = await Request.find({ companyId }).populate("companyId");
+  const requests = await Request.find({ companyId })
+    .populate("companyId")
+    .populate("userId");
+  if (!requests) {
+    res.status(404).send({ err: "No company Found" });
+  }
+
+  res.status(201).send(requests);
+});
+
+// @route   Get api/request/:userId
+// @desc    Show all requests assigned to user
+// @access  Public
+router.get("/user/:userId", async (req, res) => {
+  const { userId } = req.params;
+  const requests = await Request.find({ userId })
+    .populate("companyId")
+    .populate("userId");
   if (!requests) {
     res.status(404).send({ err: "No company Found" });
   }
@@ -43,7 +60,7 @@ router.get("/:companyId", async (req, res) => {
 // @route   Update api/request/:userId
 // @desc    Update request
 // @access  Public
-router.put("/:requestId", async (req, res) => {
+router.put("/update/:requestId", async (req, res) => {
   const _id = req.params.requestId;
 
   const newRequest = {
